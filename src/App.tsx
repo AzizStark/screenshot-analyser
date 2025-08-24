@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ImageUploader } from './components/ImageUploader/ImageUploader';
 import { ImageViewer } from './components/ImageViewer/ImageViewer';
 import { ImageDetails } from './components/ImageDetails/ImageDetails';

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import type { ImageData, ImageMetadata } from '../../types';
-import { validateImageFile, formatFileSize } from '../../utils/imageValidation';
+import { validateImageFile } from '../../utils/imageValidation';
 import './ImageUploader.css';
 
 interface ImageUploaderProps {
@@ -10,10 +10,10 @@ interface ImageUploaderProps {
   onValidating: (isValidating: boolean) => void;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({ 
-  onImageUpload, 
-  onError, 
-  onValidating 
+export const ImageUploader: React.FC<ImageUploaderProps> = ({
+  onImageUpload,
+  onError,
+  onValidating
 }) => {
   const processImage = useCallback(async (file: File) => {
     onValidating(true);
@@ -30,10 +30,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
       // Create FileReader to get base64 data and image dimensions
       const reader = new FileReader();
-      
+
       reader.onload = (e) => {
         const dataUrl = e.target?.result as string;
-        
+
         // Create image to get dimensions
         const img = new Image();
         img.onload = () => {
@@ -106,17 +106,17 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   });
 
   return (
-    <div 
-      {...getRootProps()} 
+    <div
+      {...getRootProps()}
       className={`dropzone ${isDragActive ? 'dropzone-active' : ''}`}
     >
       <input {...getInputProps()} />
       <div className="dropzone-content">
-        <svg 
-          className="upload-icon" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="upload-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
           strokeWidth="2"
         >
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
