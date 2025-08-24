@@ -47,15 +47,25 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({
   };
 
   const calculateMarkerPosition = (point: ClickPoint) => {
-    if (!imageRef.current) return { left: 0, top: 0 };
+    if (!imageRef.current || !containerRef.current) return { left: 0, top: 0 };
 
-    const rect = imageRef.current.getBoundingClientRect();
-    const scaleX = rect.width / imageDimensions.width;
-    const scaleY = rect.height / imageDimensions.height;
+    const imageRect = imageRef.current.getBoundingClientRect();
+    const wrapperElement = containerRef.current.querySelector('.image-wrapper');
+    if (!wrapperElement) return { left: 0, top: 0 };
+    
+    const wrapperRect = wrapperElement.getBoundingClientRect();
+
+    // Calculate the image's offset within the wrapper
+    const offsetX = imageRect.left - wrapperRect.left;
+    const offsetY = imageRect.top - wrapperRect.top;
+
+    // Calculate scale factors
+    const scaleX = imageRect.width / imageDimensions.width;
+    const scaleY = imageRect.height / imageDimensions.height;
 
     return {
-      left: point.imageX * scaleX,
-      top: point.imageY * scaleY
+      left: offsetX + (point.imageX * scaleX),
+      top: offsetY + (point.imageY * scaleY)
     };
   };
 
